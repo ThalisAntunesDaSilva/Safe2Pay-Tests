@@ -1,0 +1,16 @@
+{
+  "name": "Safe2Pay-Tests",
+  "version": "1.0.0",
+  "scripts": {
+    "cy:open": "cypress open",
+    "test": "cypress run"
+  },
+  "author": "Thalis Antunes",
+  "devDependencies": {
+    "@faker-js/faker": "^8.2.0",
+    "cypress": "^12.14.0"
+  },
+  "dependencies": {
+    "cypress-plugin-api": "^2.11.1"
+  }
+}
