@@ -3,14 +3,19 @@
   "version": "1.0.0",
   "scripts": {
     "cy:open": "cypress open",
-    "test": "cypress run"
+    "test": "cypress run",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\""
   },
   "author": "Thalis Antunes",
   "devDependencies": {
     "@faker-js/faker": "^8.2.0",
-    "cypress": "^12.14.0"
+    "cypress": "^12.14.0",
+    "prettier": "^3.0.3"
   },
   "dependencies": {
-    "cypress-plugin-api": "^2.11.1"
+    "@babel/eslint-parser": "^7.22.15",
+    "cypress-plugin-api": "^2.11.1",
+    "eslint-plugin-cypress": "^2.15.1",
+    "eslint-plugin-react": "^7.33.2"
   }
 }
