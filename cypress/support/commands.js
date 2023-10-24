@@ -66,48 +66,64 @@ Cypress.Commands.add("getTags", () => {
 })
 })
 
+let ownerId = ""
+let postId = ""
+
 Cypress.Commands.add("createUser", () => {
-  const firstName = faker.person.firstName(); 
-  const lastName = faker.person.lastName();  
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
   const email = faker.internet.email();
 
-    cy.generateJsonUser("mr",firstName ,lastName , email).then((json) => {
-        cy.requestWithToken('POST', `user/create`, json)
-      });
+  return cy.generateJsonUser("mr", firstName, lastName, email).then((json) => {
+    return cy.requestWithToken('POST', `user/create`, json).then((response) => {
+    
+      ownerId = response.body.id
+     let status =  response.status
+      return status;
+    });
+  });
+});
 
-})
-
-Cypress.Commands.add("createPost", () => {
+Cypress.Commands.add("createPost", (responses) => {
   let tags;
   const text = faker.lorem.paragraph();
   const image = faker.image.imageUrl();
   const likes = faker.number.int();
+  const userId = ownerId 
 
-  cy.createUser().then((response) => {
-    const ownerId = response.body.id;
+  cy.getTags().then((tagList) => {
+    tags = tagList;
 
-
-    cy.getTags().then((tagList) => {
-      tags = tagList;
-
-      cy.generateJsonPost(text, image, likes, tags, ownerId).then((json) => {
-        cy.requestWithToken('POST', 'post/create', json).then((response) => {
-          assert.equal(response.status, 200);
-        });
-      });
+    cy.generateJsonPost(text, image, likes, tags, userId).then((json) => {    
+      return cy.requestWithToken('POST', `post/create`, json).then((response) => {
+        postId = response.body.id
+       let status =  response.status
+        return status;
+      });  
+  
     });
-
-})})
-
-Cypress.Commands.add("deletePostAndUser", () => {
-  cy.createPost().then((response) => {
-    const postId = response.body.id;
-    const ownerId = response.body.owner.id; 
-    return Promise.all([
-      cy.requestWithToken('DELETE', `post/${postId}`),
-      cy.requestWithToken('DELETE', `user/${ownerId}`)
-    ]);
   });
+});
+
+Cypress.Commands.add("deletePost", () => {
+
+      cy.requestWithToken('DELETE', `post/${postId}`).then((response) => {
+       let status =  response.status
+        return status;
+      });
+     
+  
+  });
+
+
+  Cypress.Commands.add("deleteUser", () => {
+
+    cy.requestWithToken('DELETE', `user/${ownerId}`).then((response) => {
+     let status =  response.status
+      return status;
+    });
+   
+
 });
 
 
