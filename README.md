@@ -2,6 +2,8 @@
 
 I make an automation script for Safe2Pay using the Cypress Javascript framework to test user and post creation endpoints also user and post deletion endpoints. I referenced the documentation  available at https://dummyapi.io/docs for this task.
 
+## Requirements
+Install NodeJS
 
 ## Stacks
 ![Badge](https://img.shields.io/static/v1?label&message=Cypress&color=black&style=for-the-badge&logo=Cypress) 
